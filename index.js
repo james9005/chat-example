@@ -9,7 +9,19 @@ app.get('/', function(req, res){
 
 io.on('connection', function(socket){
   socket.on('chat message', function(msg){
-    io.emit('chat message', msg);
+    if(msg.includes("find me")){
+
+      var messageContents = msg.replace("find me ","");
+
+      io.emit('chat message user', msg);
+      io.emit('chat message system',"Looking for: " + messageContents );
+
+      io.emit('PI Tag', " " + messageContents + " VALUE : X");
+    }
+    else {
+
+      io.emit('chat message user', msg);
+    }
   });
 });
 
